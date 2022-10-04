@@ -5,34 +5,41 @@ weight: 4
 ---
 
 # Functions routing
+With Functions, users can take advantage of file-based routing where directory structure is mapped into routes. When you add a `functions` directory, you are indicating to Pages where you want the requests to be handled. For example, lets say you have `example.js` in the `functions` directory (`functions/example.js`). Requests to `/example` would be handled by the `example.js` file.
 
-Using a `/functions` directory will generate a routing table based on the files present in the directory. You may use JavaScript (`*.js`) or TypeScript (`*.ts`) to write your Functions. A `PagesFunction` type is declared in the [@cloudflare/workers-types](https://github.com/cloudflare/workers-types) library which you can use to type-check your Functions.
+You can add multiple files or directories to your `functions` folder. You may write these files in either JavaScript (`*.js`) or TypeScript (`*.ts`). 
 
-For example, assume this directory structure:
+## Basic example 
+For example, assume this simple directory structure:
 
     ├── ...
     ├── functions
-    |   └── api
-    │       ├── [[path]].ts
-    │       ├── [username]
-    │       │   └── profile.ts
-    │       ├── time.ts
-    │       └── todos
-    │           ├── [[path]].ts
-    │           ├── [id].ts
-    │           └── index.ts
+    │     ├── example.js
+    │     ├── example2.js
+    │     ├── example3.js
+    │     └── subfolder
+              └──subthing.js
     └── ...
 
-The following routes will be generated based on the file structure, mapping the URL pattern to the `/functions` file that will be invoked:
+Then the directory structure will map to the following paths. 
+    /example => /functions/example.js
+    /example2 => /functions/example2.js
+    /example3 => /functions/example3.js
+    /subfolder/subthings => /functions/subfolder/subthings.js
 
-    /api/time => ./functions/api/time.ts
-    /api/todos => ./functions/api/todos/index.ts
-    /api/todos/* => ./functions/api/todos/[id].ts
-    /api/todos/*/** => ./functions/api/todos/[[path]].ts
-    /api/*/profile => ./functions/api/[username]/profile.ts
-    /api/** => ./functions/api/[[path]].ts
+## Dynamic paths
+With Functions, you can also handle dynamic paths to allow matching on multiple paths without having to create a seperate file for each. There are two ways to make a dynamic path. Let's look at two examples to understand each.
 
-## Path segments
+Example 1: Single-path 
+
+Example 2: Multi-path
+
+
+
+
+
+
+
 
 In the [example above](/pages/platform/functions/#functions-routing):
 
